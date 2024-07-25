@@ -1,0 +1,7 @@
+/* payrexx-embed.css */
+
+@media only screen and (max-width: 576px) {
+.payrexx-embed-frame {
+    width: 118%;
+    margin-left: -9%;
+}
