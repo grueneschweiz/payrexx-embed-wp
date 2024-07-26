@@ -19,23 +19,33 @@
  * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
+
+
+define( 'PAYREXX_EMBED_IFRAME_START',
+        '<iframe class="payrexx-embed-frame" src="');
+
+define( 'PAYREXX_EMBED_URL_OPTIONS',
+        '&hide_description=1&donation[preselect_interval]=one_time');
+
+define( 'PAYREXX_EMBED_IFRAME_END',
+        '" allow="payment *" id="payrexx-embed" width="100%" style="border:none" frameborder="0"></iframe>');
  
 function payrexx_embed_shortcode($atts) {
     // Extract shortcode attributes
     $atts = shortcode_atts(
         array(
-            'url' => 'https://mypage.payrexx.com/en/pay?cid=abcdefgh', // Default value for 'url'
-        ), $atts, 'payrexx-embed'
+            'url' => 'https://en.wikipedia.org/wiki/Instant_answer', // Some random url as default value
+        ), $atts, 'payrexx-embed' // shortcode
     );
 
     // Get the 'url' attribute
     $url = esc_attr($atts['url']);
 
-    // Define the iframe source URL using the 'url'
-    $iframe_src = $url . "&hide_description=1&donation[preselect_interval]=one_time";
+    // Define the iframe source URL and add options
+    $iframe_src = $url . PAYREXX_EMBED_URL_OPTIONS;
 
     // Return the iframe HTML
-    return '<iframe class="payrexx-embed-frame" src='. esc_url($url) . ' allow="payment *" id="payrexx-embed" width="100%" style="border:none" frameborder="0"></iframe>';
+    return PAYREXX_EMBED_IFRAME_START . esc_url($url) . PAYREXX_EMBED_IFRAME_END;
 }
 
 // Register the shortcode
@@ -44,7 +54,8 @@ add_shortcode('payrexx-embed', 'payrexx_embed_shortcode');
 // Enqueue JavaScript and CSS files
 function payrexx_embed_enqueue_scripts() {
 
-    // Ensure the script is only loaded when the shortcode is used
+    // We want to ensure the script is only loaded when the shortcode is used
+    // This is why we look at the content of the post before loading any scripts
     
     if(!is_singular()) {
         // not a single page or post
@@ -53,7 +64,6 @@ function payrexx_embed_enqueue_scripts() {
 
     // Retrieve ACF field content
     if(class_exists('ACF') ) {
-
         $fields = get_field_objects(get_the_ID());
         $fields['main_content'];
         
@@ -61,7 +71,7 @@ function payrexx_embed_enqueue_scripts() {
         $content = $fields['main_content']['value']['content'];
         if(isset($content)) {
             foreach ($content as $key => $value) {
-                if(str_contains($content[$key]['text'], '<iframe class="payrexx-embed-frame"')) {
+                if(str_contains($content[$key]['text'], PAYREXX_EMBED_IFRAME_START)) {
                     $has_iframe = true;
                     break;
                 }
@@ -75,9 +85,9 @@ function payrexx_embed_enqueue_scripts() {
             return;
         }
     }
-    // For non-ACF users it's much easier
+    // For non-ACF users it's much easier to find shortcodes
     else {
-        if (!isset($post->post_content) || !has_shortcode($post->post_content, 'payrexx-embed')) {
+        if (!has_shortcode(get_the_content(), 'payrexx-embed')) {
             // shortcode not found in the post content
             return;
         }
@@ -103,4 +113,3 @@ function payrexx_embed_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'payrexx_embed_enqueue_scripts');
 
 ?>
-
