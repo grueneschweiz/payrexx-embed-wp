@@ -65,7 +65,6 @@ function payrexx_embed_enqueue_scripts() {
     // Retrieve ACF field content
     if(class_exists('ACF') ) {
         $fields = get_field_objects(get_the_ID());
-        $fields['main_content'];
         
         $has_iframe = false;
         $content = $fields['main_content']['value']['content'];
