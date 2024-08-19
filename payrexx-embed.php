@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       payrexx-embed
  * Description:       Embed payrexx iframes and resize them to the size of its content
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Michael Schär
@@ -68,7 +68,7 @@ function payrexx_embed_enqueue_scripts() {
         
         $has_iframe = false;
         $content = $fields['main_content']['value']['content'] ?? null;
-        if(isset($content)) {
+        if(isset($content) && is_array($content)) {
             foreach ($content as $key => $value) {
                 if(str_contains($content[$key]['text'], PAYREXX_EMBED_IFRAME_START)) {
                     $has_iframe = true;
@@ -76,7 +76,7 @@ function payrexx_embed_enqueue_scripts() {
                 }
             }
         } else {
-            // no content
+            // no content or wrong template
             return;
         }
         if(!$has_iframe) {
