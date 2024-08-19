@@ -67,7 +67,7 @@ function payrexx_embed_enqueue_scripts() {
         $fields = get_field_objects(get_the_ID());
         
         $has_iframe = false;
-        $content = $fields['main_content']['value']['content'];
+        $content = $fields['main_content']['value']['content'] ?? null;
         if(isset($content)) {
             foreach ($content as $key => $value) {
                 if(str_contains($content[$key]['text'], PAYREXX_EMBED_IFRAME_START)) {
