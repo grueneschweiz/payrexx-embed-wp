@@ -45,7 +45,7 @@ function payrexx_embed_shortcode($atts) {
     $iframe_src = $url . PAYREXX_EMBED_URL_OPTIONS;
 
     // Return the iframe HTML
-    return PAYREXX_EMBED_IFRAME_START . esc_url($url) . PAYREXX_EMBED_IFRAME_END;
+    return PAYREXX_EMBED_IFRAME_START . esc_url($iframe_src) . PAYREXX_EMBED_IFRAME_END;
 }
 
 // Register the shortcode
