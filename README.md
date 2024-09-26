@@ -6,7 +6,8 @@ The plugin has been testet with Gutenberg and ACF sites. Other classic sites sho
 
 ### Usage
 - Copy the folder into your wordpress plugins and enable the plugin
-- Put a shortcode into your page or post as follows 
+- Put a shortcode into your page or post as follows
+
 `[payrexx-embed url="https://mysite.payrexx.com/en/pay?cid=abcdefgh"]`
 
 ##### Language
