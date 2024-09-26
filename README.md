@@ -8,3 +8,11 @@ The plugin has been testet with Gutenberg and ACF sites. Other classic sites sho
 - Copy the folder into your wordpress plugins and enable the plugin
 - Put a shortcode into your page or post as follows 
 `[payrexx-embed url="https://mysite.payrexx.com/en/pay?cid=abcdefgh"]`
+
+##### Language
+Choose the language in the URL that matches your site (e.g. "de", "fr", "it", "en"). Users can always change the language themselves in the dialogue.
+`... url="https://mysite.payrexx.com/de/...`
+
+##### Default amount
+You can also specify the preselected amount by adding `&donation%5Bpreselect_amount%5D=NUMBER`. For the preselected amount of 200 CHF the whole shortcode would look like this:
+`[payrexx-embed url="https://mysite.payrexx.com/en/pay?cid=abcdefgh&donation%5Bpreselect_amount%5D=200"]`
