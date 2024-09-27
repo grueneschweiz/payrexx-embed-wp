@@ -17,3 +17,9 @@ Choose the language in the URL that matches your site (e.g. "de", "fr", "it", "e
 ##### Default amount
 You can also specify the preselected amount by adding `&donation%5Bpreselect_amount%5D=NUMBER`. For the preselected amount of 200 CHF the whole shortcode would look like this:
 `[payrexx-embed url="https://mysite.payrexx.com/en/pay?cid=abcdefgh&donation%5Bpreselect_amount%5D=200"]`
+
+##### Source page
+If you want to use one donation form on multiple pages, but still distinguish where the payment came from, use '&invoice_number=mypage.ch/campaignXY'.
+Example: 
+`[payrexx-embed url="https://mysite.payrexx.com/en/pay?cid=abcdefgh&invoice_number=verts.ch/fr/energiesolaire"]`
+Your payments will have the source in their description in the payrexx admin panel under "Transactions".
