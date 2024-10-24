@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       payrexx-embed
  * Description:       Embed payrexx iframes and resize them to the size of its content
- * Version:           0.1.3
+ * Version:           0.1.4
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Michael Schär
@@ -61,13 +61,14 @@ function payrexx_embed_enqueue_scripts() {
         // not a single page or post
         return;
     }
-
+    
     // Retrieve ACF field content
     if(class_exists('ACF') ) {
         $fields = get_field_objects(get_the_ID());
         
         $has_iframe = false;
-        $content = $fields['main_content']['value']['content'] ?? null;
+        // First is for custom ACF sites (posts, pages), second for events calendar views
+        $content = $fields['main_content']['value']['content'] ?? $fields['content']['value'] ?? null;
         if(isset($content) && is_array($content)) {
             foreach ($content as $key => $value) {
                 if(array_key_exists('text', $content[$key]) && str_contains($content[$key]['text'], PAYREXX_EMBED_IFRAME_START)) {
