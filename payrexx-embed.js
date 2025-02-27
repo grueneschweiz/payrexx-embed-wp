@@ -5,6 +5,13 @@ var updateIframeHeight = function() {
   jQuery('iframe').css('height', lastPostMessageHeight + 'px');
 };
 
+var scrollPage = function(offset) {
+  var positionToScrollTo = jQuery('iframe').position().top + offset;
+  jQuery('body, html').animate({scrollTop: positionToScrollTo}, 400, 'linear', function() {
+    jQuery(window).trigger('scroll')
+  });
+};
+
 var postMessage = function(e) {
   if (typeof e.data === 'string') {
     try {
@@ -18,6 +25,9 @@ var postMessage = function(e) {
           case 'height':
             lastPostMessageHeight = parseInt(value);
             updateIframeHeight();
+            break;
+          case 'top':
+            scrollPage(parseInt(value));
             break;
         }
       });
